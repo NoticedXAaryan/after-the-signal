@@ -2,6 +2,8 @@
 
 ## Product
 
+Source repository: [NoticedXAaryan/after-the-signal](https://github.com/NoticedXAaryan/after-the-signal).
+
 After the Signal is an open-source programming adventure. The Common Dawn is the planned campaign, and The Smallest Promise is the playable opening. Learning is the main priority. Current content is Java, OOP, and DSA; future tracks must fit the same world without rewriting its history.
 
 The user wants grounded, believable storytelling and eventually realistic character and environment art. Current concept art and placeholder models are retained while the story is tested. Social choices should influence characters, with inspectable local state and an optional token-efficient AI adapter later.

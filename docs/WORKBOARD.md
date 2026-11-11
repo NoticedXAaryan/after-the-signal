@@ -9,7 +9,9 @@
 - [x] Playable opening conversation and persistent social choices.
 - [x] Journal, pause/back flow, and first-output/receipt story responses.
 - [x] Verify story branches, save/load, and the in-game Java path.
-- [ ] Refresh the portable package and publish the source repository.
+- [x] Refresh the portable package and publish the source repository.
+
+Source: [NoticedXAaryan/after-the-signal](https://github.com/NoticedXAaryan/after-the-signal). Windows CI verifies the fresh pnpm install, Java suite, and narrative branches.
 
 ## Next
 
