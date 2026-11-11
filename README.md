@@ -12,6 +12,8 @@ Java is the playable language. Rust, Python, later story acts, and optional AI-g
 
 ## Play on Windows
 
+[Download the Windows story preview](https://github.com/NoticedXAaryan/after-the-signal/releases/tag/v0.1.0-story-preview).
+
 For the 3D game, extract the portable package and open **Play After the Signal.cmd**. It includes the Godot and Node runtimes. It requires a Java JDK 17+ and Windows WebView2. Begin a journey from the title, choose a name and a goal, then meet Mara and Rook. Press **E** to interact, **F2** for the full Java workbench, **J** for the journal, or **Esc** to pause. See [play in Godot](docs/play-in-godot.md).
 
 For the standalone workbench:
