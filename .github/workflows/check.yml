@@ -1,0 +1,36 @@
+name: Source and story checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: pnpm/action-setup@v6.1.1
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-java@v6.2.0
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run check
+      - name: Check narrative branches in an isolated profile
+        shell: pwsh
+        run: |
+          $engineDir = Join-Path $env:RUNNER_TEMP 'after-signal-godot'
+          $archive = Join-Path $env:RUNNER_TEMP 'after-signal-godot.zip'
+          Invoke-WebRequest 'https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_win64.exe.zip' -OutFile $archive
+          Expand-Archive -LiteralPath $archive -DestinationPath $engineDir
+          $env:APPDATA = Join-Path $env:RUNNER_TEMP 'after-signal-test-profile'
+          $env:AFTER_SIGNAL_TEST_RUN = '1'
+          $output = & (Join-Path $engineDir 'Godot_v4.7.2-stable_win64_console.exe') --headless --path world --script "$PWD/scripts/check-story.gd" 2>&1
+          $code = $LASTEXITCODE
+          $output | Write-Output
+          if ($code -ne 0 -or !($output -match 'Verified: three story branches') -or ($output -match 'SCRIPT ERROR|Parse Error')) { exit 1 }

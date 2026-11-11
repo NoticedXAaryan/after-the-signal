@@ -1,0 +1,12 @@
+node_modules/
+.runner/
+dist/
+src-tauri/target/
+src-tauri/gen/
+.env
+.env.*
+*.log
+docs/references/private/
+.voice-build/
+world/.godot/
+game-dist/

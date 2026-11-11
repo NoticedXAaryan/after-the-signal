@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "pack": "cairn-opening",
+  "version": 1,
+  "nodes": {
+    "opening": {
+      "lines": [
+        ["CAIRN · YEAR 173 OF THE QUIET", "The rain has lifted. Three lengths of pipe are missing from the supply ledger. Someone crossed out a name. Nobody agrees whose."],
+        ["MARA", "{player}, you used to ask why I never let you rub out a mistake. Today you get the longer answer."],
+        ["MARA", "There's a terminal in the ridge office. I have a battery, two good leads, and a courier who has repeated my instructions so often I no longer like them."],
+        ["ROOK", "You have a screen. That's what you have. Last time, a screen said the gate was ready. My sister went downstream to check."],
+        ["MARA", "We are not connecting a gate. We are going to print a receipt. Something small enough for all of us to check."],
+        ["ROOK", "And who decides what counts as checked?"]
+      ],
+      "choices": [
+        {"label": "I'll keep a repair log you can inspect.", "next": "offer_log", "set": {"approach": "public"}, "trust": 1},
+        {"label": "Let me show you the screen before I make a promise.", "next": "offer_proof", "set": {"approach": "proof"}, "trust": 0},
+        {"label": "Stand beside me. You can stop the trial.", "next": "offer_stop", "set": {"approach": "shared"}, "trust": 2}
+      ]
+    },
+    "offer_log": {
+      "lines": [
+        ["ROOK", "Write down what you expect before you try it. Not just what happened to work."],
+        ["MARA", "A fair condition. Keep the crossed-out lines too."],
+        ["YOU", "I chose {language} because I want to {intent}."],
+        ["MARA", "Then start with a line you can explain. The terminal is beyond the stone path. Wick has my note."]
+      ],
+      "next": "@end"
+    },
+    "offer_proof": {
+      "lines": [
+        ["ROOK", "A demonstration has an audience. A test has a way to be wrong. Bring me the second one."],
+        ["MARA", "He isn't asking you to fail. He's asking you to know what failure would look like."],
+        ["YOU", "I chose {language} because I want to {intent}."],
+        ["MARA", "The terminal is beyond the stone path. Read Wick's note, then try one instruction."]
+      ],
+      "next": "@end"
+    },
+    "offer_stop": {
+      "lines": [
+        ["ROOK", "All right. I keep the battery lead where I can reach it. You tell me before you change anything."],
+        ["MARA", "Two people, one small trial. That will do."],
+        ["YOU", "I chose {language} because I want to {intent}."],
+        ["MARA", "The terminal is beyond the stone path. Wick has my note. He cannot explain it, but he is very persistent."]
+      ],
+      "next": "@end"
+    },
+    "courier": {
+      "lines": [
+        ["WICK · A PAPER NOTE FROM MARA", "First: make the terminal display Ready. Second: learn how it reads a whole line. Third: print an item name and record it."],
+        ["MARA'S NOTE", "If you don't understand a symbol, ask what it does. Copying a line is how you begin. Explaining why it works is how you keep it."],
+        ["YOUR STUDY PLAN", "{guidance} Press F2 whenever you want to practice. Nothing in the ruins takes that away."]
+      ],
+      "next": "@end"
+    },
+    "rook_public": {
+      "lines": [["ROOK", "You promised a repair log. Start with a plain claim: what should happen, and what would tell you it didn't?"], ["ROOK", "A missing page bothers me more than an honest mistake."]],
+      "next": "@end"
+    },
+    "rook_proof": {
+      "lines": [["ROOK", "I haven't forgotten. You wanted to show me something before making a promise."], ["ROOK", "When you come back, tell me what the machine still cannot do."]],
+      "next": "@end"
+    },
+    "rook_shared": {
+      "lines": [["ROOK", "The lead is here. We stop if we smell hot insulation. No gate. No pump. Just a screen."], ["ROOK", "You asked me to stand beside you. I'm standing."]],
+      "next": "@end"
+    },
+    "output": {
+      "lines": [
+        ["MARA", "Ready. Good. Tell me what you've proved."],
+        ["ROOK", "{rook_output}"]
+      ],
+      "choices": [
+        {"label": "Only that it prints the word I told it to print.", "next": "output_honest", "set": {"output_claim": "bounded"}, "trust": 1},
+        {"label": "It works. We should try something bigger.", "next": "output_hurry", "set": {"output_claim": "confident"}, "trust": -1},
+        {"label": "Let Rook pick the next test.", "next": "output_review", "set": {"output_claim": "review"}, "trust": 1}
+      ]
+    },
+    "output_honest": {
+      "lines": [["ROOK", "Then we agree on something."], ["MARA", "A status message is a claim made by a program. A test is evidence about that claim. Keep the difference."], ["MARA", "Now the receipt. Not just Rope: Copper wire, with its space still in it. We need the whole item name."]],
+      "next": "@end"
+    },
+    "output_hurry": {
+      "lines": [["ROOK", "If I paint READY on the gate, have I repaired its hinge?"], ["MARA", "We have proved output, not safety. The next job is still small: read an item name and print a receipt."], ["ROOK", "Show me a case you expect to fail. Then show me how you corrected it."]],
+      "next": "@end"
+    },
+    "output_review": {
+      "lines": [["ROOK", "An item name with a space. The ledger says Copper wire. A record of Copper is a different record."], ["MARA", "That is a useful test. Read a whole line. Make a receipt somebody else can recognize."], ["ROOK", "And try a second name. I'd like to know the first one wasn't a lucky guess."]],
+      "next": "@end"
+    },
+    "receipt": {
+      "lines": [
+        ["ROOK", "Item: Copper wire. Recorded. And the other names work too."],
+        ["MARA", "This does not settle who took the pipe. It gives us a record whose rules we can inspect."],
+        ["ROOK", "{rook_receipt}"],
+        ["MARA", "There's something about the old sluice trial I should have told you before today."]
+      ],
+      "choices": [
+        {"label": "Tell me what happened to Ada.", "next": "ada", "set": {"asked_about_ada": true}, "trust": 1},
+        {"label": "Keep the record. We'll read it together when you're ready.", "next": "keep_record", "set": {"asked_about_ada": false}, "trust": 0}
+      ]
+    },
+    "ada": {
+      "lines": [["MARA", "I signed the trial sheet. The machine printed Ready after loading its settings. We treated that as proof the sensor was calibrated."], ["ROOK", "It wasn't."], ["MARA", "I kept the sheet. Keeping it didn't make me answer for it. I know that now."], ["ROOK", "Tomorrow we read the rest. Today you made one thing we can check. Let that be enough."]],
+      "next": "@end"
+    },
+    "keep_record": {
+      "lines": [["MARA", "The sheet is in my locked drawer. I signed it. You should know that much now."], ["ROOK", "Tomorrow, the drawer stays open."], ["MARA", "Yes."], ["ROOK", "Today you made one thing we can check. Let that be enough."]],
+      "next": "@end"
+    },
+    "rook_after": {
+      "lines": [["ROOK", "{rook_after}"], ["YOUR NEXT STEP", "The opening chapter ends here. The Java expedition continues in the workbench. The next story chapter will ask what happens when a working rule meets a bad reading."]],
+      "next": "@end"
+    }
+  }
+}

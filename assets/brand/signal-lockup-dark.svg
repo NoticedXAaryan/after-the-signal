@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 554 132" role="img" aria-label="After the Signal"><title>After the Signal</title>
+<g transform="translate(0 2)"><path fill="#132322" stroke="#bd9a62" stroke-width="4" d="M22 6h84l16 16v84l-16 16H22L6 106V22Z"/>
+<path fill="none" stroke="#476455" stroke-width="1.5" d="M26 14h76l12 12v76l-12 12H26l-12-12V26Z"/>
+<path fill="none" stroke="#a9ead0" stroke-linecap="round" stroke-width="6" d="M29 46a41 41 0 0 1 70 0M43 55a25 25 0 0 1 42 0"/>
+<path fill="#e9c48a" d="M64 58 82 91h15v7H73l-9-18-9 18H31v-7h15Z"/>
+<circle cx="64" cy="61" r="7" fill="#cbf9de"/>
+<path d="M53 105h22" stroke="#6f947f" stroke-linecap="round" stroke-width="2"/></g><g transform="translate(154 13)"><g transform="translate(0 5)" fill="none" stroke="#dbbd86" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M0 11 5 0l5 11M2 7h6M16 11V0h9M16 5h7M30 0h10m-5 0v11M55 0h-9v11h9m-9-6h7M62 11V0h6l3 2v2l-3 2h-6m5 0 5 5M87 0h10m-5 0v11M103 0v11m9-11v11m-9-6h9M128 0h-9v11h9m-9-6h7"/><path d="M143 5.5h70" stroke-opacity=".56"/></g>
+<g transform="translate(0 24)" fill="#f4e6c9" fill-rule="evenodd"><path d="M2 18 15 4h31l11 11-9 9-8-7H20l-5 6 4 6h26l13 13v13L44 68H13L1 57l9-10 9 8h20l6-5v-5l-5-4H15L2 29Z"/><path d="M68 4h35v12H93v40h10v12H68V56h10V16H68Z"/><path d="M116 18 130 4h34l11 11-9 10-9-8h-22l-5 6v26l6 6h24V43h-13V31h28v37h-46l-13-13Z"/><path d="M188 4h14l31 40V4h14v64h-14l-31-40v40h-14Z"/><path d="M283 4h14l27 64h-16l-5-13h-27l-5 13h-16Zm-2 39h17l-8-22Z"/><path d="M333 4h15v51h36v13h-51Z"/></g></g>
+</svg>

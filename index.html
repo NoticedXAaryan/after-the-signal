@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#141b1d">
+  <title>After the Signal</title>
+  <link rel="icon" href="/assets/brand/signal-insignia.svg">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/quest.css">
+  <link rel="stylesheet" href="/signal.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" id="site-sidebar" aria-label="Main navigation">
+      <a class="brand signal-brand" href="#home" aria-label="After the Signal home"><picture><source media="(max-width: 850px)" srcset="/assets/brand/signal-insignia.svg"><img src="/assets/brand/signal-lockup-dark.svg" alt=""></picture><small>CAIRN RECOVERY OFFICE</small></a>
+      <nav id="navigation"></nav>
+      <div class="rail-end">
+        <div class="local"><i></i><span>Java engine<small>Runs on this device</small></span></div>
+      </div>
+    </aside>
+    <div class="page">
+      <header class="topbar">
+        <div class="topbar-start">
+          <button type="button" id="sidebar-toggle" class="sidebar-toggle" aria-label="Hide sidebar" aria-controls="site-sidebar" aria-expanded="true" title="Hide sidebar">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+          </button>
+          <div id="crumb">Cairn <span>/</span> Expedition</div>
+        </div>
+        <div class="hud"><a class="hud-stars" href="#progress" id="hud-stars">★ 0 <span>stars</span></a><button class="top-timer" data-action="exam"><span aria-hidden="true">◷</span> <span id="header-clock">Time trial</span></button><button type="button" class="return-to-ruin" id="return-to-ruin" aria-keyshortcuts="F2" hidden><span aria-hidden="true">↶</span> Return to ruin <kbd>F2</kbd></button></div>
+      </header>
+      <main id="main" tabindex="-1"><div class="loading">Loading the practice lab…</div></main>
+    </div>
+  </div>
+  <dialog id="exam-dialog" aria-labelledby="exam-title">
+    <form method="dialog">
+      <div class="dialog-head"><span class="eyebrow">FOCUS SESSION</span><button class="icon-button" aria-label="Close timer settings">×</button></div>
+      <h2 id="exam-title">Time trial</h2>
+      <p>Choose a time limit and solve without hints or solutions. Passing submissions during the session count toward your score.</p>
+      <label class="field">Time limit<select id="exam-minutes"><option value="15">15 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select></label>
+      <div id="exam-status" class="muted" aria-live="polite"></div>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-action="stop-exam">End session</button><button type="button" class="button primary" data-action="start-exam">Start timed session</button></div>
+    </form>
+  </dialog>
+  <dialog id="reward-dialog" class="reward-dialog" aria-labelledby="reward-title"></dialog>
+  <dialog id="reset-dialog" aria-labelledby="reset-title">
+    <form method="dialog">
+      <h2 id="reset-title">Reset this draft?</h2>
+      <p>This replaces the code in the editor with the original starter.</p>
+      <div class="dialog-actions"><button class="button secondary">Keep draft</button><button type="button" class="button primary" data-action="confirm-reset">Reset draft</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

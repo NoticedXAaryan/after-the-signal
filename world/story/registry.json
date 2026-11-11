@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "campaign": {"id": "common-dawn", "version": 1, "title": "The Common Dawn"},
+  "tracks": [
+    {"id": "java", "name": "Java", "available": true, "description": "Fundamentals, objects, DSA, and the first working terminal."},
+    {"id": "rust", "name": "Rust", "available": false, "description": "Planned expedition; no playable course yet."},
+    {"id": "python", "name": "Python", "available": false, "description": "Planned expedition; no playable course yet."}
+  ],
+  "goals": [
+    {"id": "understand", "name": "Understand how things work", "intent": "understand the machine before trusting its answers", "guidance": "Predict an output, run it, and explain what changed."},
+    {"id": "exam", "name": "Prepare for a DSA exam", "intent": "learn the rules well enough to explain them under pressure", "guidance": "Build the foundations first. Timed sessions and DSA practice are in the workbench."},
+    {"id": "build", "name": "Build useful software", "intent": "make something other people can use and maintain", "guidance": "Treat the receipt as your first small project: inputs, behavior, and tests."}
+  ],
+  "capability_labels": {
+    "terminal.output": "A screen that prints a tested message.",
+    "records.receipt": "A receipt that preserves a complete item name."
+  },
+  "missions": [
+    {"id": "cairn.first-output", "requires": [], "grants": ["terminal.output"], "bindings": {"java": {"exercise": "learn-run"}}},
+    {"id": "cairn.receipt", "requires": ["terminal.output"], "grants": ["records.receipt"], "bindings": {"java": {"exercise": "learn-receipt"}}}
+  ]
+}
