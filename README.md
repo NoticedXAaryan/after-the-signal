@@ -2,7 +2,7 @@
 
 ![After the Signal emblem and wordmark](assets/brand/signal-lockup-light.svg)
 
-After the Signal is a free, offline programming adventure. You learn Java by bringing a ruined settlement's machines back to life: one instruction, then a method, then the data structures the settlement actually needs.
+After the Signal is a free, MIT-licensed, offline programming adventure. You learn Java by bringing a ruined settlement's machines back to life: one instruction, then a method, then the data structures the settlement actually needs.
 
 The opening chapter, **The Smallest Promise**, is playable now. You name the protagonist, choose a study goal, and make a promise to Rook. That promise changes the conversation later. The Java course beside it is a full local curriculum, graded by a JDK on your machine.
 
