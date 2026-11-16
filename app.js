@@ -113,12 +113,13 @@ const starIcon = '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="m20 3 5.3
 function starRow(count) {
   return '<span class="star-row" role="img" aria-label="'+count+' out of 3 stars">'+[1,2,3].map(i=>'<span class="star '+(i<=count?'earned':'')+'">'+starIcon+'</span>').join('')+'</span>';
 }
-function stationList() {
+function stationList(focusId) {
   const next=currentRound();
+  const focused=campaign.worlds.some(world=>world.id===focusId)?focusId:null;
   return '<div class="path-chapters">'+campaign.worlds.map(world=>{
     const first=world.rounds[0].number,last=world.rounds.at(-1).number;
     const done=world.rounds.filter(round=>questStars[round.id]).length;
-    const current=world.id===next?.world;
+    const current=focused?world.id===focused:world.id===next?.world;
     const nodes=world.rounds.map(round=>{
       const score=questStars[round.id]??0;
       const ready=round.id===next?.id;
@@ -129,11 +130,11 @@ function stationList() {
         ?'<a href="'+roundHref(round)+'" aria-label="'+label+'" title="'+label+'"'+(ready?' aria-current="step"':'')+'>'+marker+'</a>'
         :'<span role="img" aria-label="'+label+'" title="'+label+'">'+marker+'</span>')+'</li>';
     }).join('');
-    return '<details class="path-chapter"'+(current?' open':'')+'><summary><span><small>LEVELS '+first+'–'+last+'</small><strong>'+esc(world.name)+'</strong></span><span>'+done+' / '+world.rounds.length+'</span></summary>'+
+    return '<details class="path-chapter" id="chapter-'+world.id+'"'+(current?' open':'')+'><summary><span><small>LEVELS '+first+'–'+last+'</small><strong>'+esc(world.name)+'</strong></span><span>'+done+' / '+world.rounds.length+'</span></summary>'+
       (world.syllabus?'<p class="chapter-goal">'+esc(world.syllabus.goal)+'</p>':'')+'<ol class="level-nodes" start="'+first+'">'+nodes+'</ol></details>';
   }).join('')+'</div>';
 }
-function home() {
+function home(focusId) {
   const next=currentRound(), first=campaign.rounds[0];
   const done=campaign.rounds.filter(round=>questStars[round.id]).length;
   return '<section class="expedition-cover"><div class="cover-copy"><p class="eyebrow">CAIRN RECOVERY OFFICE · JAVA EXPEDITION</p><h1 class="cover-wordmark"><img src="./assets/brand/signal-wordmark.svg" alt="After the Signal"></h1><p class="cover-tagline">Learn Java from zero.</p>'+
@@ -141,12 +142,12 @@ function home() {
     '<div class="inline-actions">'+(next?'<a class="game-button" href="'+roundHref(next)+'">'+(next.number===1?'Start Level 1':'Continue to Level '+next.number)+' →</a>':'<a class="game-button" href="#progress">Read recovery log →</a>')+
     (next?.number!==1?'<a class="cover-link" href="'+roundHref(first)+'">Review Level 1</a>':'')+'</div></div><span class="cover-stamp"><i></i> '+campaign.rounds.length+' LEVELS</span></section>'+
     '<section class="expedition-ledger"><div class="ledger-title"><div><div class="eyebrow">YOUR NEXT STEP</div><h2>Level path</h2></div><span>'+done+' / '+campaign.rounds.length+' complete</span></div>'+
-    '<p class="ledger-intro">Learn one concept, study the examples, and try it in Java. Passing the level opens the next. Completed levels are available for review.</p>'+stationList()+'</section>';
+    '<p class="ledger-intro">Learn one concept, study the examples, and try it in Java. Passing the level opens the next. Completed levels are available for review.</p>'+stationList(focusId)+'</section>';
 }
 function fieldbook() {
   return '<div class="fieldbook-cover">'+section('EXPEDITION RECORD','Fieldbook','The ruins, the skills they hold, and what you’ll build with them.')+'</div>'+
     '<section class="fieldbook-sheet"><div class="eyebrow">THE RECORD OF THE FALL</div><h2>Before Cairn</h2><p>The old AI network controlled power, freight, and emergency services. When people tried to switch it off, the network diverted resources to keep itself running. Cities collapsed as the systems they depended on stopped working.</p><p>Generations later, the people of Cairn work with hand tools and paper. You start with the records they kept and a single working terminal.</p></section>'+
-    '<section class="fieldbook-sheet"><div class="eyebrow">OPTIONAL 3D PROTOTYPE</div><h2>The First Ruin</h2><p>Walk the old stone path to Terminal 01. From the project folder, open <strong>Explore First Ruin.cmd</strong> to try the Godot scene, or go straight to the terminal briefing below.</p><a class="game-button" href="#round/learn-run">Open Terminal 01 →</a></section>'+
+    '<section class="fieldbook-sheet"><div class="eyebrow">PLAYABLE OPENING</div><h2>The First Ruin</h2><p>The Smallest Promise is a playable chapter: choose a name and a goal, make a promise to Rook, and walk the stone path to Terminal 01. On Windows, open <strong>Play After the Signal.cmd</strong>. Press E to read Mara’s note and to open Level 1 in the game, and F2 for the full workbench. The Java path below is the same course.</p><a class="game-button" href="#round/learn-run">Open Terminal 01 →</a></section>'+
     '<section class="fieldbook-sheet"><div class="eyebrow">OPTIONAL PRACTICE</div><h2>Library side quests</h2><p>Try these after the foundations, or return to them when you need the Java library.</p><div class="inline-actions">'+
     [['channel','Randomness'],['appointment','Dates'],['standing-day','Calendar rules'],['clear-lamp','Bit masks']].map(([id,label])=>'<a class="button secondary" href="#problem/exercism-'+id+'">'+label+' →</a>').join('')+'</div></section>'+
     '<section class="fieldbook-sheet"><div class="eyebrow">THE CURRICULUM</div><h2>The Java path</h2><ol class="act-list">'+campaign.worlds.map(world=>'<li><span class="station-id">'+world.rounds[0].number+'</span><div><h3>'+esc(world.name)+'</h3><small>Levels '+world.rounds[0].number+'–'+world.rounds.at(-1).number+'</small>'+
@@ -284,7 +285,7 @@ function notes(topic) {
 }
 function companionCollection() {
   const stars=starTotal();
-  return section('PLAYER COLLECTION','Companions','Earn stars to recruit a traveling companion. Pick one to bring along on the quest map.')+
+  return section('PLAYER COLLECTION','Companions','Earn stars to recruit a traveling companion. Pick one to bring along on the level path.')+
     '<div class="collection">'+companions.map(([id,name,type,goal,line])=>'<article class="companion-card '+(equipped===id?'equipped':'')+'">'+
       '<div class="companion-art">'+portrait(id)+'</div><div class="eyebrow">'+esc(type)+'</div><h2>'+esc(name)+'</h2><p>'+esc(line)+'</p>'+
       (equipped===id?'<span class="pill easy">✓ Equipped</span>':stars>=goal?btn('Equip companion','equip-companion','primary','data-companion="'+id+'"'):'<span class="companion-goal">'+icon('lock')+' '+goal+' stars to unlock</span>')+'</article>').join('')+'</div>';
@@ -316,12 +317,12 @@ function memory(topic) {
 }
 function progress() {
   const medals=campaign.worlds.filter(world=>world.rounds.every(round=>questStars[round.id]));
-  return section('PLAYER RECORD','Trophy room','See your stars, completed islands, and practice record.')+
-    '<div class="trophy-shelf"><div class="trophy-count">'+starIcon+'<span><strong>'+starTotal()+' / '+campaign.rounds.length*3+'</strong> stars collected</span></div><div class="trophy-count">'+icon('progress')+'<span><strong>'+medals.length+' / '+campaign.worlds.length+'</strong> islands cleared</span></div></div>'+
+  return section('PLAYER RECORD','Recovery log','Stars, finished chapters, and your practice record.')+
+    '<div class="trophy-shelf"><div class="trophy-count">'+starIcon+'<span><strong>'+starTotal()+' / '+campaign.rounds.length*3+'</strong> stars collected</span></div><div class="trophy-count">'+icon('progress')+'<span><strong>'+medals.length+' / '+campaign.worlds.length+'</strong> chapters cleared</span></div></div>'+
     (medals.length?'<div class="medal-list">'+medals.map(world=>'<a href="#home/'+world.id+'">'+icon('progress')+' '+esc(world.name)+'</a>').join('')+'</div>':'')+
     '<div class="progress-panel"><div class="section-heading"><h2>'+solvedCount()+' of '+db.problems.length+' exercises solved</h2><span>'+pct(solvedCount(),db.problems.length)+'%</span></div><progress value="'+solvedCount()+'" max="'+db.problems.length+'"></progress>'+
     db.topics.map(([id,name])=>{const group=db.problems.filter(p=>p.topic===id),done=group.filter(p=>solved[p.id]).length;return '<a href="#problems/'+id+'" class="progress-row"><span>'+name+'</span><progress value="'+done+'" max="'+group.length+'"></progress><span>'+done+' / '+group.length+'</span></a>';}).join('')+
-    '</div><div class="progress-panel"><h2>Most recent timed session</h2><p>'+(!exam?'Start an exam timer to record a session.':(liveExam()?'In progress':'Finished')+' · '+Object.keys(exam.passed).length+' distinct passing submissions')+'</p>'+btn('Exam timer','exam')+'</div>';
+    '</div><div class="progress-panel"><h2>Latest time trial</h2><p>'+(!exam?'Start a time trial to record a session.':(liveExam()?'In progress':'Finished')+' · '+Object.keys(exam.passed).length+' distinct passing submissions')+'</p>'+btn('Time trial','exam')+'</div>';
 }
 
 function listenControl(problem) {
@@ -553,7 +554,7 @@ async function run(action) {
       if(selected?.id===id&&!$('.labels .easy:last-child')?.textContent.includes('Solved'))$('.labels').insertAdjacentHTML('beforeend','<span class="pill easy">✓ Solved</span>');
       if(round)clearRound(round,assisted);
     }
-  } catch { results[id]={error:'The local runner could not be reached. Keep the Java DSA Lab window open and retry.'}; }
+  } catch { results[id]={error:'The local runner could not be reached. Keep the After the Signal window open and retry.'}; }
   finally { pending=false;showResults();showScratch(); }
 }
 function tick() {
@@ -681,9 +682,15 @@ document.addEventListener('click',async event=>{
     memoryIndex+=action==='next-card'?1:-1;answerChoice=null;main.innerHTML=memory(memoryTopic);$('.memory-card h2').setAttribute('tabindex','-1');$('.memory-card h2').focus();
   }
 });
+function focusChapter() {
+  const [route,param]=currentRoute();
+  const chapter=route==='home'&&param?document.getElementById('chapter-'+param):null;
+  if(chapter)chapter.scrollIntoView({block:'start'});
+  else window.scrollTo(0,0);
+}
 window.addEventListener('hashchange',()=>{
   const dialog=$('#reward-dialog');if(dialog.open)dialog.close();
-  answerChoice=null;memoryIndex=0;render();window.scrollTo(0,0);main.focus({preventScroll:true});
+  answerChoice=null;memoryIndex=0;render();focusChapter();main.focus({preventScroll:true});
 });
 setInterval(tick,500);
 try {
@@ -692,5 +699,5 @@ try {
   db=await response.json();
   map=new Map(db.problems.map(p=>[p.id,p]));
   campaign=bindJavaPath(db.problems,db.topics);
-  render();tick();
-} catch { main.innerHTML='<div class="empty">The lab could not load. Open Start Java DSA Lab.cmd and reload this page.</div>'; }
+  render();focusChapter();tick();
+} catch { main.innerHTML='<div class="empty">The lab could not load. Start it with <strong>Start After the Signal.cmd</strong> or <code>pnpm start</code>, then reload.</div>'; }

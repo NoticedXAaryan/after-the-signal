@@ -122,7 +122,7 @@ server.on('error',err=>{
   } else {console.error(err.message);process.exitCode=1;}
 });
 server.listen(port,host,()=>{
-  console.log('Java DSA Lab is ready at '+address);
+  console.log('After the Signal is ready at '+address);
   console.log('JDK compiler: '+javaCommand('javac'));
   console.log('Keep this window open while practicing. Press Ctrl+C to stop.');
   if(process.argv.includes('--open'))openBrowser();
