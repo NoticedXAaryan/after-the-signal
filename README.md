@@ -2,49 +2,110 @@
 
 ![After the Signal emblem and wordmark](assets/brand/signal-lockup-light.svg)
 
-After the Signal is a free, MIT-licensed desktop game for learning to program. The first course starts with Java fundamentals, moves through object-oriented Java, and finishes with data structures and algorithms.
+After the Signal is a free, offline programming adventure. You learn Java by bringing a ruined settlement's machines back to life: one instruction, then a method, then the data structures the settlement actually needs.
 
-The first story chapter, **The Smallest Promise**, now has a title screen, real loading transition, a named protagonist, three study goals, branching conversations, a journal, and local saves. Your promises affect how Rook responds to you. The planned campaign follows a community rebuilding machines, networks, and eventually a bounded learning system.
-
-Java is the playable language. Rust, Python, later story acts, and optional AI-generated NPC phrasing are planned. The current story runs offline with authored consequences and no API key.
+The opening chapter, **The Smallest Promise**, is playable now. You name the protagonist, choose a study goal, and make a promise to Rook. That promise changes the conversation later. The Java course beside it is a full local curriculum, graded by a JDK on your machine.
 
 ![Native game title screen](docs/story-title.png)
 
-## Play on Windows
+## Highlights
+
+- **216 campaign levels**, taught in order. Write Java, pass the current level, and the next one opens. Eight early chapters end in a graded field repair.
+- **359 coding exercises** in the same workbench: guided lessons, campaign problems, drills, and 15 standalone Exercism adaptations, including four optional Java library labs.
+- **Three stars a round.** One for passing every test, a second for solving without the reference, and a third for the Big-O bonus. Replays keep your best score.
+- **98 narrated lessons**, each with a Kokoro recording and a transcript. The first 12 lessons, and the input and receipt levels, also have runnable demonstrations.
+- **The First Ruin**, a small 3D chapter. Collect Mara's note, press E at Terminal 01, and pass Level 1 inside the game. A correct submission lights the screen. F2 opens the full workbench from anywhere.
+- **Practice tools:** 68 memory cards, a Java scratchpad, a growth lab, and timed sessions.
+- **Seven companions**, recruited with stars.
+- Local by design. No account and no API key. Drafts, stars, and story choices stay on the device.
+
+## Tech stack
+
+| Layer | Stack |
+| --- | --- |
+| Workbench | Node.js 22, vanilla ES modules, CodeMirror 6, esbuild |
+| Java runner | JDK 17 or newer. The project checks use Temurin 21. Learner code is compiled with `javac` in a temporary directory, with time and output limits. |
+| Desktop shell | Tauri 2 (Rust). The Windows build produces an NSIS installer. |
+| Story world | Godot 4.7 and GDScript. On Windows, Godot WRY embeds the workbench in the game window. |
+| Packages | pnpm 11.25 |
+
+The browser workbench, the Tauri app, and the Godot chapter share one course. Their saves stay in separate profiles.
+
+## Play
+
+### Windows story preview
 
 [Download the Windows story preview](https://github.com/NoticedXAaryan/after-the-signal/releases/tag/v0.1.0-story-preview).
 
-For the 3D game, extract the portable package and open **Play After the Signal.cmd**. It includes the Godot and Node runtimes. It requires a Java JDK 17+ and Windows WebView2. Begin a journey from the title, choose a name and a goal, then meet Mara and Rook. Press **E** to interact, **F2** for the full Java workbench, **J** for the journal, or **Esc** to pause. See [play in Godot](docs/play-in-godot.md).
+Extract the portable package and open **Play After the Signal.cmd**. Godot and Node are included. You also need a JDK 17 or newer and the Windows WebView2 Runtime. Begin a journey from the title, choose a name and a goal, then meet Mara and Rook.
 
-For the standalone workbench:
+| Key | Action |
+| --- | --- |
+| WASD or arrows | Walk. Hold Shift to move faster. |
+| E | Read, talk, or use the terminal. |
+| F2 | Open or leave the full Java workbench. |
+| J | Open the journal. |
+| Esc | Pause. |
 
-1. Install Node.js 22+ and a [JDK 17 or newer](https://adoptium.net/temurin/releases/?version=21).
-2. From this checkout, run `pnpm install --frozen-lockfile`, then double-click **Start Java DSA Lab.cmd**.
-3. Choose **Start Level 1**, run the worked example, then write and check your own code. If you already have a save, use **Review Level 1** to revisit the new introduction.
+The walkthrough is in [Play in Godot](docs/play-in-godot.md).
 
-The game and Java engine run locally. Drafts and progress stay in the application profile. The optional LeetCode and Java reference links open in your browser. Run Java code you wrote or trust because it executes with your user account's permissions.
+### Workbench from this checkout
 
-## What you can play
+1. Install [Node.js 22+](https://nodejs.org/) and a [JDK 17 or newer](https://adoptium.net/temurin/releases/?version=21).
+2. Install pnpm 11.25 if you do not already have it (`corepack enable`, or the package manager pinned in `package.json`).
+3. Run `pnpm install --frozen-lockfile`.
+4. Open **Start After the Signal.cmd**, or run `pnpm start`, and use [the local workbench](http://127.0.0.1:4173).
 
-- **216 campaign levels.** Eight foundation chapters each culminate in a graded field repair. Learn in order, write Java, and pass the current level to unlock the next one.
-- **Three stars per round.** Earn one by passing all tests, a second by solving without the reference, and a third by answering the Big-O bonus. Replay rounds to improve your best score.
-- **359 coding exercises.** Open practice includes 15 standalone Exercism adaptations, including four optional Java library labs, in addition to the campaign lessons, problems, and drills.
-- **Offline narration for 98 guided lessons.** Play, pause, or seek in a Kokoro recording, or open the matching transcript. The first 12 lessons and the input and receipt levels also have runnable demonstrations.
-- **3D First Ruin.** Get Mara's note from the courier, then press E at the terminal to open Level 1 inside the game. Passing Java submissions light the screen and finish the receipt repair. Press F2 anywhere to use the full workbench.
-- **Practice tools.** Use 68 memory cards, the Java sandbox, the growth lab, and timed sessions to work on specific skills.
-- **Seven companions.** Unlock cats, dogs, wizards, and a suspiciously sentient cup of coffee by collecting stars.
+**Start Java DSA Lab.cmd** opens the same workbench. Choose **Start Level 1**, run the worked example, then write and check your own code. **Review Level 1** returns to the introduction when a save already exists.
+
+Run only Java you wrote or trust. It executes with your user account's permissions. Optional LeetCode and Java reference links open in the browser.
 
 ## Develop
 
-Install Node.js 22+, a JDK 17+, and the [Tauri v2 prerequisites](https://v2.tauri.app/start/prerequisites/). The Windows build uses Rust, MSVC, WebView2, and NSIS.
+Install Node.js 22+, a JDK 17+, pnpm 11.25, Rust 1.85 or newer, and the [Tauri v2 prerequisites](https://v2.tauri.app/start/prerequisites/). The Windows installer also needs MSVC, WebView2, and NSIS.
 
 ```powershell
 pnpm install --frozen-lockfile
 pnpm run check
+pnpm start
 pnpm run desktop:dev
 pnpm run desktop:build
 ```
 
-The Windows installer is built under `src-tauri/target/release/bundle/nsis`. For browser development, use `pnpm start` and open [the local web preview](http://127.0.0.1:4173). Browser and desktop saves live in separate profiles.
+`pnpm run check` compiles every reference solution. The current suite is 1,016 cases across 359 exercises, 10 growth comparisons, and checks for a compile error, a timeout, a wrong answer, and a passing submission.
 
-See the [Java syllabus and pacing](docs/curriculum-pacing.md), [brand identity](docs/brand-identity.md), [Contributing](CONTRIBUTING.md), the [design guide](docs/design-system.md), [runtime research](docs/open-source-runtime.md), the [First Ruin workboard](docs/first-ruin.md), and [third-party notices](THIRD-PARTY-NOTICES.md).
+The story check runs in Godot 4.7 with an isolated profile and `AFTER_SIGNAL_TEST_RUN=1`:
+
+```powershell
+godot --headless --path world --script scripts/check-story.gd
+```
+
+It covers the three opening promises, save and continue, unknown future story IDs, loading, pause and resume, the journal, and returning to the title. Point it at a temporary profile, never a player's save. See [scripts/check-story.gd](scripts/check-story.gd).
+
+GitHub Actions runs the install, the Java suite, and the story check on Windows. The NSIS installer is produced under `src-tauri/target/release/bundle/nsis`. A portable game folder is built on 64-bit Windows with `node scripts/build-game.mjs`.
+
+## Status
+
+**Playable in this repository**
+
+- The Java path, from a first `println` through object-oriented Java and data structures and algorithms.
+- The browser workbench and the Tauri desktop workbench, each with its own local save.
+- The opening chapter in Godot: title, loading, dialogue, journal, and a walk to Terminal 01. Story choices are stored on the device.
+
+**Planned**
+
+- Later acts as places you can walk through, starting with the water-controller crisis.
+- Rust and Python course tracks, attached by the same track and capability IDs. Java is the only playable track today.
+- Save transfer between the browser, Tauri, and game profiles.
+- Grounded character art, camera collision, controller remapping, and broader accessibility.
+- Optional model-written NPC lines, with an explicit provider choice and a spending cap. The current dialogue is authored and stays offline.
+- Multiplayer.
+
+## Read next
+
+- [Java syllabus and pacing](docs/curriculum-pacing.md)
+- [Story bible](docs/story-bible.md) — campaign spoilers, and a clear line between playable and planned acts
+- [Workboard](docs/WORKBOARD.md)
+- [Brand](docs/brand-identity.md), [design guide](docs/design-system.md), and [runtime notes](docs/open-source-runtime.md)
+- [Contributing](CONTRIBUTING.md)
+- [Third-party notices](THIRD-PARTY-NOTICES.md)

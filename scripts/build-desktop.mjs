@@ -17,4 +17,4 @@ const files = [
 await Promise.all(files.map(file=>copyFile(join(root,file),join(out,file))));
 await writeFile(join(out,'editor.bundle.js'),await bundleEditor());
 await cp(join(root,'assets'),join(out,'assets'),{recursive:true});
-console.log('Packaged the Java Quest frontend for Tauri.');
+console.log('Packaged the After the Signal workbench for Tauri.');
